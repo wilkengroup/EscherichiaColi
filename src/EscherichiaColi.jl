@@ -7,6 +7,7 @@ using PeriodicTable # to correctly simplify biomass
 
 import AbstractFBCModels as A
 import .A.CanonicalModel as CM
+import SparseArrays as S # model accessors
 
 include("model.jl")
 include("simplify.jl")
