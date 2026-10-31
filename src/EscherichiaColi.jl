@@ -3,6 +3,7 @@ module EscherichiaColi
 using CSV, JSON
 using DocStringExtensions
 using AbstractFBCModels ,JSONFBCModels
+using PeriodicTable # to correctly simplify biomass
 
 import AbstractFBCModels as A
 import .A.CanonicalModel as CM

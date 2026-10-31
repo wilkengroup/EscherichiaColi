@@ -1,4 +1,26 @@
 
+"""
+Return the chemical element of `x`.
+"""
+to_element(x::String) = begin
+    sym = length(x) > 1 ? Symbol(uppercase(first(x)) * x[2:end]) : Symbol(uppercase(first(x)))
+    elements[sym]
+end
+
+"""
+Return molar mass of `mid`. Return `NaN` if formula does not exist.
+"""
+get_molar_mass(model, mid) = begin
+    rs = A.metabolite_formula(model, mid)
+    isnothing(rs) && return NaN # if metabolite has no molar mass
+    sum(v * to_element(k).atomic_mass for (k, v) in rs).val
+end
+
+"""
+Remove low fraction biomass constituents. Deleting these from the biomass
+function might help reduce numerical trouble with various analyses, like
+gradient descent etc.
+"""
 function simplify_biomass!(model)
 
     delete!(model.reactions, "BIOMASS_Ec_iML1515_WT_75p37M")
@@ -40,6 +62,28 @@ function simplify_biomass!(model)
     ]
     for mid in bmids
         delete!(model.reactions["BIOMASS_Ec_iML1515_core_75p37M"].stoichiometry, mid)
+    end
+
+
+    d = A.reaction_stoichiometry(model, "BIOMASS_Ec_iML1515_core_75p37M")
+    atp_baseline = d["adp_c"]
+    atprxn = ["adp_c", "atp_c", "h_c", "h2o_c", "pi_c"]
+    for mid in keys(d)
+        if mid in atprxn
+            d[mid] += (atp_baseline * (mid in ["atp_c", "h2o_c"] ? +1 : -1))
+        end
+    end
+
+    x = sum(v * get_molar_mass(model, k) for (k, v) in d) / -1000.0
+    reweight = 1/x
+
+    for mid in keys(d)
+        if mid in atprxn
+            d[mid] *= reweight 
+            d[mid] -= (mid in ["atp_c", "h2o_c"] ? +1 : -1)*atpm_baseline
+        else
+            d[mid] *= reweight
+        end
     end
 
 end
