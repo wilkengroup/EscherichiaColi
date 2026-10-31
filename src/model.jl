@@ -76,7 +76,7 @@ Base.@kwdef mutable struct Model <: A.AbstractFBCModel
 end
 
 Base.show(io::Base.IO, ::MIME"text/plain", model::Model) = println("""
-    Vibrio natriegens
+    Escherichia coli
     $(A.n_reactions(model)) reactions
     $(A.n_metabolites(model)) metabolites
     $(A.n_genes(model)) genes

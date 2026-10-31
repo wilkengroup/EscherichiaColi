@@ -1,3 +1,8 @@
+name = "EscherichiaColi"
+uuid = "935aa5a9-81a0-4315-bc93-c4846f8c0e5b"
+version = "0.1.0"
+authors = ["St. Elmo Wilken <stelmozors@gmail.com>"]
+
 [deps]
 AbstractFBCModels = "5a4f3dfa-1789-40f8-8221-69268c29937c"
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"

@@ -1,10 +1,14 @@
 module EscherichiaColi
 
 using CSV, JSON
-import AbstractFBCModels as A
 using DocStringExtensions
+using AbstractFBCModels ,JSONFBCModels
+
+import AbstractFBCModels as A
+import .A.CanonicalModel as CM
 
 include("model.jl")
+include("simplify.jl")
 include("reaction_isozymes.jl")
 include("build.jl")
 

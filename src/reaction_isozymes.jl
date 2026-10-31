@@ -15,7 +15,7 @@ Assemble reaction isozymes from Uniprot proteome data and ComplexPortal data. In
 a set of complexes, this also gets rid of low confidence complexes if any
 complex in the set can be found in the ComplexPortal.
 """
-function get_reaction_isozymes!(model, proteome_data, complex_data)
+function get_reaction_isozymes(model, proteome_data, complex_data)
     # protein stoich map, infer from uniprot
     mer_map = Dict(
         "Homomonomer" => 1,
