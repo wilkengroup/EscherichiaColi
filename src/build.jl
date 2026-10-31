@@ -1,21 +1,21 @@
 
 function build_model(simplify_biomass = false)
 
-    model = convert(CM.Model, A.load("data/iML1515.json"))
+    model = convert(CM.Model, A.load(joinpath(pkgdir(@__MODULE__),"data", "iML1515.json")))
     if simplify_biomass
         simplify_biomass!(model)
     end
 
     # load data from complex DB, and uniprot
     proteome_data = begin
-        x = CSV.File("data/e_coli_uniprot.tsv", delim = '\t')
+        x = CSV.File(joinpath(pkgdir(@__MODULE__), "data", "e_coli_uniprot.tsv"), delim = '\t')
         Dict{String,Tuple{Float64,String}}(
             gp => (m, coalesce(k, "")) for (gp, m, k) in zip(x.gene_product, x.mass, x.kind)
         )
     end
 
     complex_data = begin
-        x = CSV.File("data/e_coli_complex.tsv", delim = '\t')
+        x = CSV.File(joinpath(pkgdir(@__MODULE__), "data", "e_coli_complex.tsv"), delim = '\t')
         res = Dict{String,Dict{String,Float64}}()
         for c in x.complex
             res[c] = Dict{String,Float64}()
