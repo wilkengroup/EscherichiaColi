@@ -1,5 +1,5 @@
 
-function build_model(simplify_biomass = false)
+function build_model(;simplify_biomass = false)
 
     model = convert(CM.Model, A.load(joinpath(pkgdir(@__MODULE__),"data", "iML1515.json")))
     if simplify_biomass
