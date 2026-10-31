@@ -1,5 +1,5 @@
 
-function build_model(;simplify_biomass = false)
+function build_model(;simplify_biomass = false, rename_biomass = false)
 
     model = convert(CM.Model, A.load(joinpath(pkgdir(@__MODULE__),"data", "iML1515.json")))
     if simplify_biomass
@@ -60,6 +60,12 @@ function build_model(;simplify_biomass = false)
             annotations = gn.annotations,
             notes = gn.notes,
         )
+    end
+
+    if rename_biomass
+        bmass = deepcopy(ecoli.reactions["BIOMASS_Ec_iML1515_core_75p37M"])
+        delete!(ecoli.reactions, "BIOMASS_Ec_iML1515_core_75p37M")
+        ecoli.reactions["BIOMASS"] = bmass
     end
 
     ecoli

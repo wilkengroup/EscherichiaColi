@@ -25,7 +25,13 @@ using EscherichiaColi
 
 model = EscherichiaColi.build_model()
 ```
-Note, the `build_model` function has an optional keyword argument
-`simplify_biomass` that is set to `false` by default. When this argument is
-`true`, then low abundance biomass constituents are removed from the biomass
-function, and it is proportionately re-weighted.
+
+## Notes
+
+1. The `build_model` function has an optional keyword argument
+   `simplify_biomass` that is set to `false` by default. When this argument is
+   `true`, then low abundance biomass constituents are removed from the biomass
+   function, and it is proportionately re-weighted.
+2. The `build_model` function has an optional keyword argument `rename_biomass`
+   that is set to `false` by default. When this is set to `true`, the biomass
+   reaction is renamed to `BIOMASS`.
