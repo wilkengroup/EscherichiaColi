@@ -80,7 +80,7 @@ function simplify_biomass!(model)
     for mid in keys(d)
         if mid in atprxn
             d[mid] *= reweight 
-            d[mid] -= (mid in ["atp_c", "h2o_c"] ? +1 : -1)*atpm_baseline
+            d[mid] -= (mid in ["atp_c", "h2o_c"] ? +1 : -1)*atp_baseline
         else
             d[mid] *= reweight
         end
