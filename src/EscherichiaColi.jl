@@ -10,7 +10,6 @@ import .A.CanonicalModel as CM
 import SparseArrays as S # model accessors
 
 include("model.jl")
-include("simplify.jl")
 include("reaction_isozymes.jl")
 include("build.jl")
 

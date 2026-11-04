@@ -1,9 +1,10 @@
 
-function build_model(;simplify_biomass = false, rename_biomass = false)
+function build_model(;simplify = false, rename_biomass = false)
 
-    model = convert(CM.Model, A.load(joinpath(pkgdir(@__MODULE__),"data", "iML1515.json")))
-    if simplify_biomass
-        simplify_biomass!(model)
+    if simplify
+        model = convert(CM.Model, A.load(joinpath(pkgdir(@__MODULE__),"data", "iCH360.json")))
+    else
+        model = convert(CM.Model, A.load(joinpath(pkgdir(@__MODULE__),"data", "iML1515.json")))
     end
 
     # load data from complex DB, and uniprot
@@ -62,11 +63,17 @@ function build_model(;simplify_biomass = false, rename_biomass = false)
         )
     end
 
-    if rename_biomass
+    if rename_biomass && simplify
+        bmass = deepcopy(ecoli.reactions["Biomass"])
+        delete!(ecoli.reactions, "Biomass")
+        ecoli.reactions["BIOMASS"] = bmass
+    end
+
+    if rename_biomass && !simplify
         bmass = deepcopy(ecoli.reactions["BIOMASS_Ec_iML1515_core_75p37M"])
         delete!(ecoli.reactions, "BIOMASS_Ec_iML1515_core_75p37M")
         ecoli.reactions["BIOMASS"] = bmass
     end
-
+    
     ecoli
 end

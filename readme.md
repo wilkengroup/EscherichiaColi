@@ -1,7 +1,8 @@
 # A genome-scale metabolic model of _Escherichia coli_
 
-This model is fully based on the iML1515 model, which can be found here:
-https://bigg.bio/models/iML1515.
+This repo allows you to build an _E. coli_ model that is either based on
+[iML1515](https://bigg.bio/models/iML1515) or
+[iCH360](https://github.com/marco-corrao/iCH360).
 
 This repo merely serves as a convenient location to reproducibly build the gene
 reaction stoichiometry information that is collated from multiple sources,
@@ -28,10 +29,9 @@ model = EscherichiaColi.build_model()
 
 ## Notes
 
-1. The `build_model` function has an optional keyword argument
-   `simplify_biomass` that is set to `false` by default. When this argument is
-   `true`, then low abundance biomass constituents are removed from the biomass
-   function, and it is proportionately re-weighted.
+1. The `build_model` function has an optional keyword argument `simplify` that
+   is set to `false` by default. When this argument is `true`, then the iCH360
+   based model is loaded, otherwise the iML1515 based model is loaded. 
 2. The `build_model` function has an optional keyword argument `rename_biomass`
    that is set to `false` by default. When this is set to `true`, the biomass
    reaction is renamed to `BIOMASS`.
