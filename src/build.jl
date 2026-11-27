@@ -1,5 +1,5 @@
 
-function build_model(;simplify = false, rename_biomass = false)
+function build_model(;simplify = false, rename_biomass = false, simplify_biomass = false)
 
     if simplify
         model = convert(CM.Model, A.load(joinpath(pkgdir(@__MODULE__),"data", "iCH360.json")))
@@ -69,6 +69,9 @@ function build_model(;simplify = false, rename_biomass = false)
         ecoli.reactions["BIOMASS"] = bmass
     end
 
+    if !simplify && simplify_biomass # this only applies to iML1515 since the other model is already simplified
+        simplify_biomass!(model)
+    end
     if rename_biomass && !simplify
         bmass = deepcopy(ecoli.reactions["BIOMASS_Ec_iML1515_core_75p37M"])
         delete!(ecoli.reactions, "BIOMASS_Ec_iML1515_core_75p37M")
