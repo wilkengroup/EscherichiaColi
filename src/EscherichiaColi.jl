@@ -11,6 +11,7 @@ import SparseArrays as S # model accessors
 
 include("model.jl")
 include("reaction_isozymes.jl")
+include("simplify.jl")
 include("build.jl")
 
 end
